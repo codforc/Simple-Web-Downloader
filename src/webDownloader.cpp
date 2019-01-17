@@ -28,7 +28,7 @@ char* generateSendline(HTTPRequest request,const char* ipAddress,const char* por
         requestLine = "HEAD";
     }
     // Closed keep connect Connection:Close
-    sendLine = requestLine + " /" + sfileName + "  HTTP/1.1\r\nHost: " + sipAddress + " " + sport + "\r\nConnection:Close\r\n\r\n";
+    sendLine = requestLine + " /" + sfileName + " HTTP/1.1\r\nHost: " + sipAddress + ":" + sport + "\r\nConnection:Close\r\n\r\n";
     std::cout << "Generate sendline: " << sendLine << std::endl;
     const char* temp = sendLine.data();
     char *buf=new char[strlen(temp)+1];
@@ -95,10 +95,10 @@ int main(int argc, char const *argv[])
 
     if(argc == 4){
         //Get command
-        sendline =  generateSendline(GET, address, argv[2], argv[3]);
+        sendline =  generateSendline(GET, argv[1], argv[2], argv[3]);
     }else if(argc == 5 && strcmp(argv[4], "-h") == 0){
         //HEAD command
-        sendline =  generateSendline(HEAD, address, argv[2], argv[3]);
+        sendline =  generateSendline(HEAD, argv[1], argv[2], argv[3]);
     }else{
         printf("usage: ./wd <ipaddress> <port> <file> (optional -h)\n");
         return 0;
